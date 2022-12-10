@@ -1,0 +1,24 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "rs-school file-manager task project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishat-se/file-manager.git"
+  },
+  "keywords": [
+    "rs-school",
+    "nodejs"
+  ],
+  "author": "Rishat Agzamov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rishat-se/file-manager/issues"
+  },
+  "homepage": "https://github.com/rishat-se/file-manager#readme"
+}
