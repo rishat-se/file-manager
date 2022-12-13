@@ -4,6 +4,8 @@ import { dirname } from 'node:path';
 import list from './fs/list.js';
 import parseArgs from './cli/args.js';
 import getHomeDir from './cli/get-home-dir.js';
+import changeDir from './fs/change-dir.js';
+import preParseCmd from './cli/pre-parse-cmd.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,16 +32,19 @@ const runFileManager = async () => {
     rl.prompt();
 
     rl.on('line', async (line) => {
-        switch (line.trim()) {
+        const [command, cmdArgs] = preParseCmd(line);
+        switch (command.toLowerCase()) {
+            case 'cd':
+                changeDir(cmdArgs);
+                break;
             case 'ls':
-                console.log('before_list');
-                await list(__dirname);
+                await list(workDir);
                 break;
             case '.exit':
                 exitApp(userName);
                 break;
             default:
-                console.log(`Say what? I might have heard '${line.trim()}'`);
+                console.log(`Invalid Input ${command}`);
                 break;
         }
         rl.prompt();
