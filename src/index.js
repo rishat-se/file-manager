@@ -35,10 +35,20 @@ const runFileManager = async () => {
         const [command, cmdArgs] = preParseCmd(line);
         switch (command.toLowerCase()) {
             case 'cd':
-                changeDir(cmdArgs);
+                try {
+                    workDir = await changeDir(workDir, cmdArgs);
+                    rl.setPrompt(`You are currently in ${workDir}\n`);
+                } catch (err) {
+                    console.log(err.message);
+                }
                 break;
             case 'ls':
-                await list(workDir);
+                try {
+                    if (cmdArgs.length) throw new Error('Invalid Input');
+                    await list(workDir);
+                } catch (err) {
+                    console.log(err.message);
+                }
                 break;
             case '.exit':
                 exitApp(userName);
