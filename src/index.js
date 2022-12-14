@@ -52,6 +52,9 @@ const runFileManager = async () => {
                 case 'add':
                     await create(workDir, cmdArgs);
                     break;
+                case 'rn':
+                    await rename(workDir, cmdArgs);
+                    break;
                 case 'rm':
                     await remove(workDir, cmdArgs);
                     break;
