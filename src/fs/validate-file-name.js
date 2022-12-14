@@ -1,6 +1,6 @@
 
 const isValidFileName = (fileName) => {
-    return /[\\/:\*\?"<>\|]+/.test(fileName);
+    return !/[\\/:\*\?"<>\|]+/.test(fileName);
 }
 
 export default isValidFileName;
