@@ -7,6 +7,7 @@ import getHomeDir from './cli/get-home-dir.js';
 import changeDir from './fs/change-dir.js';
 import preParseCmd from './cli/pre-parse-cmd.js';
 import cat from './fs/cat.js';
+import create from './fs/create.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,13 +36,6 @@ const runFileManager = async () => {
     rl.on('line', async (line) => {
         const [command, cmdArgs] = preParseCmd(line);
         switch (command.toLowerCase()) {
-            case 'cat':
-                try {
-                    await cat(workDir, cmdArgs);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
             case 'cd':
                 try {
                     workDir = await changeDir(workDir, cmdArgs);
@@ -54,6 +48,20 @@ const runFileManager = async () => {
                 try {
                     if (cmdArgs.length) throw new Error('Invalid Input');
                     await list(workDir);
+                } catch (err) {
+                    console.log(err.message);
+                }
+                break;
+            case 'cat':
+                try {
+                    await cat(workDir, cmdArgs);
+                } catch (err) {
+                    console.log(err.message);
+                }
+                break;
+            case 'add':
+                try {
+                    await create(workDir, cmdArgs);
                 } catch (err) {
                     console.log(err.message);
                 }

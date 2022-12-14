@@ -4,7 +4,6 @@ import { createReadStream } from 'node:fs';
 const cat = async (workDir, cmdArgs) => {
     if (cmdArgs.length !== 1) throw new Error('Invalid Input');
     const fileName = path.resolve(workDir, cmdArgs[0]);
-    console.log(fileName);
     try {
         await new Promise((resolve, reject) => {
             const readStream = createReadStream(fileName);
@@ -14,7 +13,7 @@ const cat = async (workDir, cmdArgs) => {
             readStream.on('error', err => reject(err));
         })
     } catch {
-        throw Error('Operation failed');
+        throw new Error('Operation failed');
     }
 };
 
