@@ -10,7 +10,7 @@ const list = async (folderPath) => {
             .map(item => { return { Name: item.name, Type: item.isDirectory() ? 'directory' : 'file' } });
         files.length ? console.table(files) : console.log('Directory is empty');
     } catch {
-        throw new Error('Operation Failed');
+        throw new Error('Operation failed');
     }
 }
 

@@ -11,7 +11,7 @@ const changeDir = async (workDir, cmdArgs) => {
         if (!fstat.isDirectory()) throw new Error();
         return newPath;
     } catch {
-        throw new Error('Operation Failed');
+        throw new Error('Operation failed');
     }
 }
 
