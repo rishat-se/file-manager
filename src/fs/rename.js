@@ -8,14 +8,13 @@ const rename = async (workDir, cmdArgs) => {
     const newFilePath = path.resolve(path.dirname(oldFilePath), cmdArgs[1]);
     try {
         //check if new file exists
-        let isNewFileExist = true;
-        try {
-            await fs.access(newFilePath, fs.constants.F_OK);
-        } catch {
-            isNewFileExist = false;
-        }
-        if (isNewFileExist) throw new Error();
+        await new Promise((resolve, reject) => {
+            fs.access(newFilePath, fs.constants.F_OK)
+                .then(() => reject(new Error()))
+                .catch(() => resolve())
+        })
         //rename
+        console.log('newfile doesnt exist');
         await fs.rename(oldFilePath, newFilePath);
     } catch {
         throw new Error('Operation failed');
