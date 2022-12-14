@@ -9,6 +9,7 @@ import preParseCmd from './cli/pre-parse-cmd.js';
 import cat from './fs/cat.js';
 import create from './fs/create.js';
 import remove from './fs/delete.js';
+import rename from './fs/rename.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -43,7 +44,7 @@ const runFileManager = async () => {
                     rl.setPrompt(`You are currently in ${workDir}\n`);
                     break;
                 case 'ls':
-                    if (cmdArgs.length) throw new Error('Invalid Input');
+                    if (cmdArgs.length) throw new Error('Invalid input');
                     await list(workDir);
                     break;
                 case 'cat':
@@ -62,7 +63,7 @@ const runFileManager = async () => {
                     exitApp(userName);
                     break;
                 default:
-                    throw new Error(`Invalid Input ${command}`);
+                    throw new Error(`Invalid input ${command}`);
             }
         } catch (err) {
             console.log(err.message);

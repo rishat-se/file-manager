@@ -5,31 +5,21 @@ import isValidFileName from './validate-file-name.js';
 const rename = async (workDir, cmdArgs) => {
     if (cmdArgs.length !== 2 || !isValidFileName(cmdArgs[1])) throw new Error('Invalid Input');
     const oldFilePath = path.resolve(workDir, cmdArgs[0]);
-
-    const NEW_FILENAME = __dirname + '/files/properFilename.md';
-    let isNewFileExists = true;
-    //Check if FILE exists
+    const newFilePath = path.resolve(path.dirname(oldFilePath), cmdArgs[1]);
     try {
+        //check if new file exists
+        let isNewFileExist = true;
         try {
-            await fs.access(NEW_FILENAME, fs.constants.F_OK);
+            await fs.access(newFilePath, fs.constants.F_OK);
         } catch {
-            isNewFileExists = false;
+            isNewFileExist = false;
         }
-        //throw Error if NewFile exists or rename file
-        if (isNewFileExists) {
-            throw Error('FS operation failed');
-        } else {
-            //rename or throw Error if failed
-            try {
-                await fs.rename(OLD_FILENAME, NEW_FILENAME);
-            } catch {
-                throw Error('FS operation failed');
-            }
-        }
-    } catch (err) {
-        //rethrow Error
-        throw (err);
+        if (isNewFileExist) throw new Error();
+        //rename
+        await fs.rename(oldFilePath, newFilePath);
+    } catch {
+        throw new Error('Operation failed');
     }
 };
 
-await rename();
+export default rename;
