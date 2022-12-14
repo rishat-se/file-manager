@@ -36,49 +36,33 @@ const runFileManager = async () => {
 
     rl.on('line', async (line) => {
         const [command, cmdArgs] = preParseCmd(line);
-        switch (command.toLowerCase()) {
-            case 'cd':
-                try {
+        try {
+            switch (command.toLowerCase()) {
+                case 'cd':
                     workDir = await changeDir(workDir, cmdArgs);
                     rl.setPrompt(`You are currently in ${workDir}\n`);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
-            case 'ls':
-                try {
+                    break;
+                case 'ls':
                     if (cmdArgs.length) throw new Error('Invalid Input');
                     await list(workDir);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
-            case 'cat':
-                try {
+                    break;
+                case 'cat':
                     await cat(workDir, cmdArgs);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
-            case 'add':
-                try {
+                    break;
+                case 'add':
                     await create(workDir, cmdArgs);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
-            case 'rm':
-                try {
+                    break;
+                case 'rm':
                     await remove(workDir, cmdArgs);
-                } catch (err) {
-                    console.log(err.message);
-                }
-                break;
-            case '.exit':
-                exitApp(userName);
-                break;
-            default:
-                console.log(`Invalid Input ${command}`);
+                    break;
+                case '.exit':
+                    exitApp(userName);
+                    break;
+                default:
+                    throw new Error(`Invalid Input ${command}`);
+            }
+        } catch (err) {
+            console.log(err.message);
         }
         rl.prompt();
     }).on('close', () => {
