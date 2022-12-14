@@ -8,6 +8,7 @@ import changeDir from './fs/change-dir.js';
 import preParseCmd from './cli/pre-parse-cmd.js';
 import cat from './fs/cat.js';
 import create from './fs/create.js';
+import remove from './fs/delete.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -66,12 +67,18 @@ const runFileManager = async () => {
                     console.log(err.message);
                 }
                 break;
+            case 'rm':
+                try {
+                    await remove(workDir, cmdArgs);
+                } catch (err) {
+                    console.log(err.message);
+                }
+                break;
             case '.exit':
                 exitApp(userName);
                 break;
             default:
                 console.log(`Invalid Input ${command}`);
-                break;
         }
         rl.prompt();
     }).on('close', () => {
