@@ -10,6 +10,7 @@ import cat from './fs/cat.js';
 import create from './fs/create.js';
 import remove from './fs/delete.js';
 import rename from './fs/rename.js';
+import copy from './fs/copy.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -55,6 +56,9 @@ const runFileManager = async () => {
                     break;
                 case 'rn':
                     await rename(workDir, cmdArgs);
+                    break;
+                case 'cp':
+                    await copy(workDir, cmdArgs);
                     break;
                 case 'rm':
                     await remove(workDir, cmdArgs);
