@@ -60,6 +60,10 @@ const runFileManager = async () => {
                 case 'cp':
                     await copy(workDir, cmdArgs);
                     break;
+                case 'mv':
+                    await copy(workDir, cmdArgs);
+                    await remove(workDir, cmdArgs.slice(0, 1));
+                    break;
                 case 'rm':
                     await remove(workDir, cmdArgs);
                     break;
