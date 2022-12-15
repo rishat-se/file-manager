@@ -11,6 +11,7 @@ import create from './fs/create.js';
 import remove from './fs/delete.js';
 import rename from './fs/rename.js';
 import copy from './fs/copy.js';
+import osInfo from './os/os-info.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -66,6 +67,9 @@ const runFileManager = async () => {
                     break;
                 case 'rm':
                     await remove(workDir, cmdArgs);
+                    break;
+                case 'os':
+                    osInfo(cmdArgs);
                     break;
                 case '.exit':
                     exitApp(userName);
