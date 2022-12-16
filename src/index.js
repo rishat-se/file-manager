@@ -1,4 +1,5 @@
 import * as  readline from 'node:readline';
+import { EOL } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import list from './fs/list.js';
@@ -13,6 +14,8 @@ import rename from './fs/rename.js';
 import copy from './fs/copy.js';
 import osInfo from './os/os-info.js';
 import calculateHash from './hash/calc-hash.js';
+import compress from './zlib/compress.js';
+import decompress from './zlib/decompress.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,10 +35,10 @@ const runFileManager = async () => {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        prompt: `You are currently in ${workDir}\n`
+        prompt: `You are currently in ${workDir}${EOL}`
     });
 
-    console.log(`Welcome to the File Manager, ${userName}!\n`);
+    console.log(`Welcome to the File Manager, ${userName}!${EOL}`);
     rl.prompt();
 
     rl.on('line', async (line) => {
@@ -44,7 +47,7 @@ const runFileManager = async () => {
             switch (command.toLowerCase()) {
                 case 'cd':
                     workDir = await changeDir(workDir, cmdArgs);
-                    rl.setPrompt(`You are currently in ${workDir}\n`);
+                    rl.setPrompt(`You are currently in ${workDir}${EOL}`);
                     break;
                 case 'ls':
                     if (cmdArgs.length) throw new Error('Invalid input');
@@ -74,6 +77,12 @@ const runFileManager = async () => {
                     break;
                 case 'hash':
                     await calculateHash(workDir, cmdArgs);
+                    break;
+                case 'compress':
+                    await compress(workDir, cmdArgs);
+                    break;
+                case 'decompress':
+                    await decompress(workDir, cmdArgs);
                     break;
                 case '.exit':
                     exitApp(userName);

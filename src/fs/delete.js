@@ -4,7 +4,6 @@ import * as path from 'node:path'
 const remove = async (workDir, cmdArgs) => {
     if (cmdArgs.length !== 1) throw new Error('Invalid Input');
     const fileName = path.resolve(workDir, cmdArgs[0]);
-    console.log(fileName);
     try {
         await fs.rm(fileName);
     } catch {
