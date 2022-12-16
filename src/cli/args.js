@@ -1,14 +1,14 @@
 import process from 'node:process';
 
 const parseArgs = () => {
-    const args = [];
+    const args = {};
     for (let i = 2; i < process.argv.length; i++) {
         const matchRes = process.argv[i].match(/^--(\w+)=(\w+)$/);
         if (matchRes) {
-            args.push({ [matchRes[1]]: matchRes[2] });
+            args[matchRes[1]] = matchRes[2];
         }
     }
-    return args.length ? args : null;
+    return Object.keys(args).length ? args : null;
 }
 
 

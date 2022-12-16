@@ -1,7 +1,5 @@
 import * as  readline from 'node:readline';
 import { EOL } from 'node:os';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
 import list from './fs/list.js';
 import parseArgs from './cli/args.js';
 import getHomeDir from './cli/get-home-dir.js';
@@ -17,18 +15,15 @@ import calculateHash from './hash/calc-hash.js';
 import compress from './zlib/compress.js';
 import decompress from './zlib/decompress.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 const runFileManager = async () => {
     const args = parseArgs();
     //validate arguments
-    if (!args || args[0].username === undefined) {
+    if (!args || args.username === undefined) {
         console.error(`Invalid Argument. Please, start application using following format:
             \"npm run start -- --username=your_username\"`);
         process.exit(1);
     }
-    const userName = args[0].username;
+    const userName = args.username;
 
     let workDir = getHomeDir();
 
