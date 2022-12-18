@@ -10,7 +10,13 @@ const copy = async (workDir, cmdArgs) => {
     fileNewPath = path.join(fileNewPath, path.basename(fileOldPath));
     try {
         //check if file exist
-        await fs.access(fileOldPath, fs.constants.F_OK)
+        await fs.access(fileOldPath, fs.constants.F_OK);
+        //check if destination file exist
+        await new Promise((resolve, reject) => {
+            fs.access(fileNewPath, fs.constants.F_OK)
+                .then(() => reject(new Error()))
+                .catch(() => resolve())
+        })
         await pipeline(
             createReadStream(fileOldPath),
             createWriteStream(fileNewPath)

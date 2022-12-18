@@ -8,7 +8,7 @@ const cat = async (workDir, cmdArgs) => {
         await new Promise((resolve, reject) => {
             const readStream = createReadStream(fileName);
             readStream.setEncoding('utf8');
-            readStream.on('data', chunk => console.log(chunk))
+            readStream.on('data', chunk => console.log(`\x1b[34m${chunk}\x1b[0m`));
             readStream.on('end', () => resolve());
             readStream.on('error', err => reject(err));
         })

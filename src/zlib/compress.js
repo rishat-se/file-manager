@@ -20,9 +20,6 @@ const compress = async (workDir, cmdArgs) => {
         } catch {
         }
 
-        console.log(inFilePath);
-        console.log(outFilePath);
-
         //check if input file exist
         await fs.access(inFilePath, fs.constants.F_OK);
 

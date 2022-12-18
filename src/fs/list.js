@@ -8,7 +8,7 @@ const list = async (folderPath) => {
                 return a.name.localeCompare(b.name);
             })
             .map(item => { return { Name: item.name, Type: item.isDirectory() ? 'directory' : 'file' } });
-        files.length ? console.table(files) : console.log('Directory is empty');
+        files.length ? console.table(files) : console.log('\x1b[34m', 'Directory is empty', '\x1b[0m');
     } catch {
         throw new Error('Operation failed');
     }

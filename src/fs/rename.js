@@ -14,7 +14,6 @@ const rename = async (workDir, cmdArgs) => {
                 .catch(() => resolve())
         })
         //rename
-        console.log('newfile doesnt exist');
         await fs.rename(oldFilePath, newFilePath);
     } catch {
         throw new Error('Operation failed');

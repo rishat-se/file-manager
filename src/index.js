@@ -19,8 +19,8 @@ const runFileManager = async () => {
     const args = parseArgs();
     //validate arguments
     if (!args || args.username === undefined) {
-        console.error(`Invalid Argument. Please, start application using following format:
-            \"npm run start -- --username=your_username\"`);
+        console.error('\x1b[31m', `Invalid Argument. Please, start application using following format:
+            \"npm run start -- --username=your_username\"`, '\x1b[0m');
         process.exit(1);
     }
     const userName = args.username;
@@ -30,19 +30,19 @@ const runFileManager = async () => {
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        prompt: `You are currently in ${workDir}${EOL}`
+        prompt: `You are currently in ${workDir}${EOL}>`
     });
 
     console.log(`Welcome to the File Manager, ${userName}!${EOL}`);
     rl.prompt();
 
     rl.on('line', async (line) => {
-        const [command, cmdArgs] = preParseCmd(line);
         try {
+            const [command, cmdArgs] = preParseCmd(line);
             switch (command.toLowerCase()) {
                 case 'cd':
                     workDir = await changeDir(workDir, cmdArgs);
-                    rl.setPrompt(`You are currently in ${workDir}${EOL}`);
+                    rl.setPrompt(`You are currently in ${workDir}${EOL}>`);
                     break;
                 case 'ls':
                     if (cmdArgs.length) throw new Error('Invalid input');
@@ -82,11 +82,13 @@ const runFileManager = async () => {
                 case '.exit':
                     exitApp(userName);
                     break;
+                case '':
+                    break;
                 default:
-                    throw new Error(`Invalid input ${command}`);
+                    throw new Error(`Invalid input`);
             }
         } catch (err) {
-            console.log(err.message);
+            console.log('\x1b[31m', err.message, '\x1b[0m');
         }
         rl.prompt();
     }).on('close', () => {

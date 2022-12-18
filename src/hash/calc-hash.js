@@ -8,7 +8,7 @@ const calculateHash = async (workDir, cmdArgs) => {
     try {
         const content = await fs.readFile(filePath, { encoding: 'utf8' });
         const hash = createHash('sha256').update(content);
-        console.log(hash.digest('hex'));
+        console.log(`\x1b[34m${hash.digest('hex')}\x1b[0m`);
     } catch {
         throw new Error('Operation failed');
     }
