@@ -11,8 +11,8 @@ const decompress = async (workDir, cmdArgs) => {
     const inFilePath = path.resolve(workDir, cmdArgs[0]);
     let outFilePath = path.resolve(workDir, cmdArgs[1]);
     try {
-        //if outFilePath is directory, then derive filename from inFilePath and append
-        //brotli extension 
+        //if outFilePath is directory, then derive filename from inFilePath and remove
+        //brotli extension if present
         try {
             const fstat = await fs.stat(outFilePath);
             if (!fstat.isDirectory()) throw new Error();

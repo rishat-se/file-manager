@@ -1,6 +1,5 @@
 
 const preParseCmd = (line) => {
-    // const cmdArgs = line.trim().split(/\s+/);
     if (!line.length) return ['', []];
     line = `${line} `;
     const cmdArgs = [];
